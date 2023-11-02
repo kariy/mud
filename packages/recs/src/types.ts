@@ -58,7 +58,7 @@ export type ValueType<T = unknown> = {
 export type ComponentValue<S extends Schema = Schema, T = unknown> = {
   [key in keyof S]: S[key] extends Schema
     ? ComponentValue<S[key], T>
-    : ValueType<T>[S[key] extends keyof ValueType<T> ? S[key] : never];
+    : ValueType<T>[S[key] extends keyof ValueType<T> ? S[key] : any];
 };
 
 /**
@@ -78,9 +78,7 @@ export interface Component<S extends Schema = Schema, M extends Metadata = Metad
   values: {
     [key in keyof S]: Map<
       EntitySymbol,
-      S[key] extends Schema
-        ? ComponentValue<S[key], T>
-        : ValueType<T>[S[key] extends keyof ValueType<T> ? S[key] : never]
+      S[key] extends Schema ? ComponentValue<S[key], T> : ValueType<T>[S[key] extends keyof ValueType<T> ? S[key] : any]
     >;
   };
   schema: S;
