@@ -210,6 +210,7 @@ export function getComponentValue<S extends Schema, T = unknown>(
   const schemaKeys = Object.keys(component.schema);
   for (const key of schemaKeys) {
     const val = component.values[key].get(entitySymbol);
+
     if (val === undefined && !OptionalTypes.includes(component.schema[key])) return undefined;
     value[key] = val;
   }
